@@ -46,8 +46,7 @@ import java.util.concurrent.TimeUnit
 const val DB_CONTACT = "db_contact"
 const val TABLE_CONTACT = "table_contact"
 
-const val TAG_ADD_CONTACT_MODAL_BOTTOM_SHEET = "TAG_ADD_CONTACT_MODAL_BOTTOM_SHEET"
-const val TAG_VIDEO_MODAL_BOTTOM_SHEET = "TAG_VIDEO_MODAL_BOTTOM_SHEET"
+const val TAG_PERSON_DETAIL_MODAL_BOTTOM_SHEET = "TAG_PERSON_DETAIL_MODAL_BOTTOM_SHEET"
 
 fun View.showSnackBar(
     message: String,

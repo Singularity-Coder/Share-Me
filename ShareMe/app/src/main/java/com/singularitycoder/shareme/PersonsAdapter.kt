@@ -4,12 +4,13 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.singularitycoder.shareme.databinding.ListItemPersonBinding
 
 class PersonsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var personList = mutableListOf<Person>()
-    private var itemClickListener: (person: Person) -> Unit = {}
+    private var itemClickListener: (person: Person, position: Int) -> Unit = { person, position -> }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val itemBinding = ListItemPersonBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,7 +25,7 @@ class PersonsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int): Int = position
 
-    fun setItemClickListener(listener: (person: Person) -> Unit) {
+    fun setItemClickListener(listener: (person: Person, position: Int) -> Unit) {
         itemClickListener = listener
     }
 
@@ -35,11 +36,15 @@ class PersonsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun setData(person: Person) {
             itemBinding.apply {
                 tvHostName.text = person.name
+                tvUsableTimeCount.text = "Can afford ~ ${person.iCanAfford}"
 //                ratingHost.rating = person.rating
 //                tvRatingCount.text = "(${person.ratingCount})"
 //                tvDateAdded.text = host.dateStarted.toIntuitiveDateTime()
+                ivImage.load(person.tempImageDrawable) {
+                    placeholder(R.drawable.ic_placeholder)
+                }
                 cardBody.setOnClickListener {
-                    itemClickListener.invoke(person)
+                    itemClickListener.invoke(person, bindingAdapterPosition)
                 }
             }
         }

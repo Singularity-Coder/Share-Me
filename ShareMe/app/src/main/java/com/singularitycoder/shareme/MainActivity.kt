@@ -83,6 +83,6 @@ class MainActivity : AppCompatActivity() {
 
     inner class HomeViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) : FragmentStateAdapter(fragmentManager, lifecycle) {
         override fun getItemCount(): Int = tabNamesList.size
-        override fun createFragment(position: Int): Fragment = ShareFragment.newInstance(shareState = tabNamesList[position])
+        override fun createFragment(position: Int): Fragment = ShareFragment.newInstance(tab = tabNamesList[position])
     }
 }

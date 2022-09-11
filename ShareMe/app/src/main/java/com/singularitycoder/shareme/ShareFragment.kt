@@ -15,14 +15,15 @@ class ShareFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(shareState: String) = ShareFragment().apply {
+        fun newInstance(tab: String) = ShareFragment().apply {
             arguments = Bundle().apply {
-                putString(ARG_PARAM_SHARE_STATE, shareState)
+                putString(ARG_PARAM_TAB, tab)
             }
         }
     }
 
-    private lateinit var shareState: String
+    private var shareState: String? = null
+
     private lateinit var binding: FragmentShareBinding
 
     private val personsAdapter = PersonsAdapter()
@@ -30,7 +31,7 @@ class ShareFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        shareState = arguments?.getString(ARG_PARAM_SHARE_STATE, "") ?: ""
+        shareState = arguments?.getString(ARG_PARAM_TAB, "") ?: ""
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -66,44 +67,72 @@ class ShareFragment : Fragment() {
         ibClearSearch.setOnClickListener {
             etSearch.setText("")
         }
+        personsAdapter.setItemClickListener { person: Person, position: Int ->
+            PersonDetailBottomSheetFragment.newInstance(
+                adapterPosition = position,
+                person = person
+            ).show(requireActivity().supportFragmentManager, TAG_PERSON_DETAIL_MODAL_BOTTOM_SHEET)
+        }
     }
 
     private fun setDummyData() {
         val hostList = listOf<Person>(
             Person(
-                name = "Jack the Black",
-                rating = 3f,
-                ratingCount = 33
+                name = "Lelouch Lamperouge",
+                rating = 5f,
+                ratingCount = 3203,
+                iCanAfford = "13 min",
+                tempImageDrawable = R.drawable.lelouch
             ),
             Person(
                 name = "Jenny",
                 rating = 5f,
-                ratingCount = 3203
-            ),
-            Person(
-                name = "Rose",
-                rating = 5f,
-                ratingCount = 4002
+                ratingCount = 3203,
+                iCanAfford = "1 min",
             ),
             Person(
                 name = "Lisa",
                 rating = 5f,
-                ratingCount = 5993
+                ratingCount = 5993,
+                iCanAfford = "1 min",
+            ),
+            Person(
+                name = "Rose",
+                rating = 5f,
+                ratingCount = 4002,
+                iCanAfford = "1 min",
+                tempImageDrawable = R.drawable.rose
             ),
             Person(
                 name = "Jisoo",
                 rating = 5f,
-                ratingCount = 6729
+                ratingCount = 6729,
+                iCanAfford = "1 min",
+                tempImageDrawable = R.drawable.jisoo
             ),
             Person(
                 name = "Monkey on the Hill",
                 rating = 1.5f,
-                ratingCount = 8
-            )
+                ratingCount = 8,
+                iCanAfford = "18 hrs",
+            ),
+            Person(
+                name = "Jack the Black",
+                rating = 3f,
+                ratingCount = 33,
+                iCanAfford = "3 hrs",
+                tempImageDrawable = R.drawable.po
+            ),
+            Person(
+                name = "Kangaroo Boxer",
+                rating = 1.5f,
+                ratingCount = 8,
+                iCanAfford = "6 hrs",
+            ),
         )
         personsAdapter.personList = hostList.toMutableList()
         personsAdapter.notifyDataSetChanged()
     }
 }
 
-private const val ARG_PARAM_SHARE_STATE = "ARG_PARAM_SHARE_STATE"
+private const val ARG_PARAM_TAB = "ARG_PARAM_TAB"
