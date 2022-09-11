@@ -35,10 +35,10 @@ class PersonsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun setData(person: Person) {
             itemBinding.apply {
                 tvHostName.text = person.name
-                ratingHost.rating = person.rating
-                tvRatingCount.text = "(${person.ratingCount})"
+//                ratingHost.rating = person.rating
+//                tvRatingCount.text = "(${person.ratingCount})"
 //                tvDateAdded.text = host.dateStarted.toIntuitiveDateTime()
-                root.setOnClickListener {
+                cardBody.setOnClickListener {
                     itemClickListener.invoke(person)
                 }
             }

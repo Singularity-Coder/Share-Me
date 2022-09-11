@@ -1,3 +1,4 @@
+![alt text](https://github.com/Singularity-Coder/Share-Me/blob/main/assets/logo192.png)
 # Share-Me
 Make the best use of your time!
 
