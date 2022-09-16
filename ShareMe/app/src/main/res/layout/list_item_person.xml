@@ -17,7 +17,9 @@
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/card_body"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/card_body">
+        app:layout_constraintTop_toTopOf="@+id/card_body"
+        app:strokeColor="@color/black_50"
+        app:strokeWidth="1dp">
 
         <ImageView
             android:id="@+id/iv_image"
@@ -76,6 +78,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
+                    android:maxLines="1"
                     android:text="Can afford: ~ 99 min"
                     android:textColor="@android:color/darker_gray"
                     app:layout_constraintEnd_toStartOf="@+id/iv_right_arrow"

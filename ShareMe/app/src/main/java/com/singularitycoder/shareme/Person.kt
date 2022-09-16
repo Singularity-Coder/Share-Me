@@ -13,6 +13,16 @@ data class Person(
     var rating: Float = 0f,
     var ratingCount: Int = 0,
     var location: String = "",
+    var profession: String = "",
+    var hourlyWorth: Double = 0.0,
+    var skillsList: List<String> = emptyList(),
+    var servicesList: List<String> = emptyList(),
     var iCanAfford: String = "",
     @DrawableRes var tempImageDrawable: Int = -1
+) : Parcelable
+
+@Parcelize
+data class PersonService(
+    var title: String,
+    var timeToComplete: Long
 ) : Parcelable

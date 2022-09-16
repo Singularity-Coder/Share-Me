@@ -17,7 +17,7 @@
         <entry key="app/src/main/res/drawable/ic_round_whatsapp_24.xml" value="0.1265" />
         <entry key="app/src/main/res/drawable/round_replay_circle_filled_24.xml" value="0.1265" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19610507246376813" />
-        <entry key="app/src/main/res/layout/fragment_person_detail_bottom_sheet.xml" value="0.12222222222222222" />
+        <entry key="app/src/main/res/layout/fragment_person_detail_bottom_sheet.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_share.xml" value="0.19747899159663865" />
         <entry key="app/src/main/res/layout/list_item_person.xml" value="0.22274881516587677" />
       </map>

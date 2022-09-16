@@ -20,6 +20,7 @@ import android.os.Parcelable
 import android.provider.ContactsContract
 import android.provider.Settings
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
@@ -278,6 +279,23 @@ fun AppCompatActivity.showScreen(
         .commit()
 }
 
+fun View.setMargins(
+    all: Int? = null,
+    start: Int = 0,
+    top: Int = 0,
+    end: Int = 0,
+    bottom: Int = 0
+) {
+    if (this.layoutParams !is ViewGroup.MarginLayoutParams) return
+    val params = this.layoutParams as ViewGroup.MarginLayoutParams
+    if (all != null) {
+        params.setMargins(all, all, all, all)
+    } else {
+        params.setMargins(start, top, end, bottom)
+    }
+    this.requestLayout()
+}
+
 enum class DateType(val value: String) {
     dd_MMM_yyyy(value = "dd MMM yyyy"),
     dd_MMM_yyyy_h_mm_a(value = "dd-MMM-yyyy h:mm a"),
@@ -288,7 +306,7 @@ enum class DateType(val value: String) {
 }
 
 enum class Tab(val value: String) {
-    SHARE(value = "Share"),
-    SHARED(value = "Shared"),
+    HOME(value = "Home"),
+    TIME_REQUESTS(value = "Time Requests"),
     SAVED(value = "Saved"),
 }

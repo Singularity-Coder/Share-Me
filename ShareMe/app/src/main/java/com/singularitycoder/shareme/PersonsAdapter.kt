@@ -36,7 +36,7 @@ class PersonsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun setData(person: Person) {
             itemBinding.apply {
                 tvHostName.text = person.name
-                tvUsableTimeCount.text = "Can afford ~ ${person.iCanAfford}"
+                tvUsableTimeCount.text = "${person.profession}  |  Can afford ~ ${person.iCanAfford}"
 //                ratingHost.rating = person.rating
 //                tvRatingCount.text = "(${person.ratingCount})"
 //                tvDateAdded.text = host.dateStarted.toIntuitiveDateTime()

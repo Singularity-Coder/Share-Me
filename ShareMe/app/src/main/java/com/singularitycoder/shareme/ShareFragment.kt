@@ -46,7 +46,7 @@ class ShareFragment : Fragment() {
     }
 
     private fun FragmentShareBinding.setupUI() {
-        if (shareState == Tab.SHARE.value) cardSearch.isVisible = false
+        if (shareState == Tab.HOME.value) cardSearch.isVisible = false
         rvFlukes.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = personsAdapter
@@ -81,53 +81,75 @@ class ShareFragment : Fragment() {
                 name = "Lelouch Lamperouge",
                 rating = 5f,
                 ratingCount = 3203,
-                iCanAfford = "13 min",
-                tempImageDrawable = R.drawable.lelouch
+                iCanAfford = "0.0001 min",
+                tempImageDrawable = R.drawable.lelouch,
+                profession = "Emperor",
+                hourlyWorth = 99999999.99,
+                skillsList = listOf("Governing Countries", "Knightmare Pilot", "War Tactics", "International Strategy", "Hacking", "Logic", "Math", "Physics"),
+                servicesList = listOf("Full nation conquest in 24 hours.", "Can stage a rebellion in 2 hours.", "Hack into an xyz computer in 5 minutes.")
             ),
             Person(
                 name = "Jenny",
                 rating = 5f,
                 ratingCount = 3203,
                 iCanAfford = "1 min",
+                profession = "Rapper",
+                hourlyWorth = 9999.99,
+                skillsList = listOf("Singer", "Rapper", "Dancer", "Actress", "TV Star", "Instagram Influencer", "Youtube Influencer")
             ),
             Person(
                 name = "Lisa",
                 rating = 5f,
                 ratingCount = 5993,
                 iCanAfford = "1 min",
+                profession = "Dancer",
+                hourlyWorth = 9999.99,
+                skillsList = listOf("Singer", "Rapper", "Dancer", "Actress", "TV Star", "Instagram Influencer", "Youtube Influencer")
             ),
             Person(
                 name = "Rose",
                 rating = 5f,
                 ratingCount = 4002,
                 iCanAfford = "1 min",
-                tempImageDrawable = R.drawable.rose
+                tempImageDrawable = R.drawable.rose,
+                profession = "Singer",
+                hourlyWorth = 9999.99,
+                skillsList = listOf("Singer", "Rapper", "Dancer", "Actress", "TV Star", "Instagram Influencer", "Youtube Influencer")
             ),
             Person(
                 name = "Jisoo",
                 rating = 5f,
                 ratingCount = 6729,
                 iCanAfford = "1 min",
-                tempImageDrawable = R.drawable.jisoo
+                tempImageDrawable = R.drawable.jisoo,
+                profession = "Actress",
+                hourlyWorth = 9999.99,
+                skillsList = listOf("Singer", "Rapper", "Dancer", "Actress", "TV Star", "Instagram Influencer", "Youtube Influencer")
             ),
             Person(
                 name = "Monkey on the Hill",
                 rating = 1.5f,
                 ratingCount = 8,
                 iCanAfford = "18 hrs",
+                profession = "Runner",
+                hourlyWorth = 99.99
             ),
             Person(
                 name = "Jack the Black",
                 rating = 3f,
                 ratingCount = 33,
                 iCanAfford = "3 hrs",
-                tempImageDrawable = R.drawable.po
+                tempImageDrawable = R.drawable.po,
+                profession = "Martial Artist",
+                hourlyWorth = 9.99
             ),
             Person(
                 name = "Kangaroo Boxer",
                 rating = 1.5f,
                 ratingCount = 8,
                 iCanAfford = "6 hrs",
+                profession = "Boxer",
+                hourlyWorth = 0.99
             ),
         )
         personsAdapter.personList = hostList.toMutableList()

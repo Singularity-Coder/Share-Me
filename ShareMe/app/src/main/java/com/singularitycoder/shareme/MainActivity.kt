@@ -1,7 +1,7 @@
 package com.singularitycoder.shareme
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
@@ -24,7 +24,19 @@ import dagger.hilt.android.AndroidEntryPoint
 // First time user opens app he fills the profile
 // Thsi probably makees sense to be a D-App hosted on blockchain
 // Mayeb create an online docu-sign contract and only then accept offers
+// Maybe do a linkedin login and sync all skills
 
+
+// Before accepting a time requst
+// Call, Sign contract with docu-sign, start work
+
+// Should services be offered only in hours?
+
+// Since time is too vague
+// 5 min - i can achieve x
+// __Develop full website__ IN __2 hrs__
+// I can acheive x in y mins
+// 5 min, 30 min, 1 hr time goals
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -32,8 +44,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     val tabNamesList = listOf(
-        Tab.SHARE.value,
-        Tab.SHARED.value,
+        Tab.HOME.value,
+        Tab.TIME_REQUESTS.value,
         Tab.SAVED.value,
     )
 
@@ -58,12 +70,32 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.setupUI()
         setUpViewPager()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         binding.viewpagerHome.unregisterOnPageChangeCallback(viewPager2PageChangeListener)
+    }
+
+    private fun ActivityMainBinding.setupUI() {
+        val user = Person(
+            name = "Hithesh Vurjana",
+            rating = 1f,
+            ratingCount = 3333203,
+            iCanAfford = "24 hrs",
+            tempImageDrawable = R.drawable.hithesh,
+            profession = "Software Engineer",
+            hourlyWorth = 999.99
+        )
+        ivImage.setImageDrawable(drawable(user.tempImageDrawable))
+        ivImage.setOnClickListener {
+            PersonDetailBottomSheetFragment.newInstance(
+                adapterPosition = 0,
+                person = user
+            ).show(supportFragmentManager, TAG_PERSON_DETAIL_MODAL_BOTTOM_SHEET)
+        }
     }
 
     private fun setUpViewPager() {

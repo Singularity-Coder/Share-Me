@@ -7,6 +7,9 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.view.isVisible
+import androidx.core.view.marginTop
 import androidx.core.widget.doAfterTextChanged
 import coil.load
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -68,12 +71,18 @@ class PersonDetailBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun FragmentPersonDetailBottomSheetBinding.setupUI() {
+        ivImageExpanded.layoutParams.height = deviceWidth()
         ivImage.load(person?.tempImageDrawable) {
             placeholder(R.drawable.ic_placeholder_big)
         }
+        ivImageExpanded.load(person?.tempImageDrawable) {
+            placeholder(R.drawable.ic_placeholder_big)
+        }
         tvPersonName.text = person?.name
-        tvAffordCount.text = person?.iCanAfford
-        listOf("Governing Countries", "Knightmare Pilot", "War Tactics", "International Strategy", "Hacking", "Logic", "Math", "Physics").forEach { it: String ->
+        tvTimeYouCanAfford.text = "You can afford ${person?.iCanAfford} of ${person?.name}'s time."
+        tvProfession.text = person?.profession
+        tvHourlyWorthCount.text = "${person?.hourlyWorth} USD"
+        person?.skillsList?.forEach { it: String ->
             val chip = Chip(requireContext()).apply {
                 text = it
                 isCheckable = false
@@ -86,9 +95,33 @@ class PersonDetailBottomSheetFragment : BottomSheetDialogFragment() {
             }
             chipGroupSkills.addView(chip)
         }
+//        val itemBinding: ItemSmsBinding = ItemSmsBinding.inflate(LayoutInflater.from(requireContext()), binding.llServices, false)
+//        itemBinding.tvNumber.text = sms.number
+        /**
+         * https://stackoverflow.com/questions/3429546/how-do-i-add-a-bullet-symbol-in-textview
+         * • = \u2022,   ● = \u25CF,   ○ = \u25CB,   ▪ = \u25AA,   ■ = \u25A0,   □ = \u25A1,   ► = \u25BA
+         * */
+        person?.servicesList?.forEach { it: String ->
+            val serviceTextView = TextView(context).apply {
+                text = "\u25CF  $it"
+                setTextColor(requireContext().color(R.color.title_color))
+                setMargins(start = 0, top = 8.dpToPx(), end = 0, bottom = 0)
+                setPadding(0, 8.dpToPx(), 0, 0)
+            }
+            binding.llServices.addView(serviceTextView)
+        }
     }
 
     private fun FragmentPersonDetailBottomSheetBinding.setupUserActionListeners() {
+        ivImage.setOnClickListener {
+            ivImageExpanded.isVisible = true
+            ivImage.isVisible = false
+        }
+        ivImageExpanded.setOnClickListener {
+            ivImage.isVisible = true
+            ivImageExpanded.isVisible = false
+        }
+
         etName.doTextFieldEmptyValidation()
         etName.setBoxStrokeOnFocusChange()
 
