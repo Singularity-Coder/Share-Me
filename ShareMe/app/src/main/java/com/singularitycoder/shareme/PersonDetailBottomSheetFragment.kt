@@ -1,17 +1,22 @@
 package com.singularitycoder.shareme
 
+import android.app.Dialog
 import android.content.DialogInterface
+import android.content.DialogInterface.OnShowListener
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
-import androidx.core.view.marginTop
 import androidx.core.widget.doAfterTextChanged
 import coil.load
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.textfield.TextInputLayout
@@ -58,6 +63,16 @@ class PersonDetailBottomSheetFragment : BottomSheetDialogFragment() {
         binding.observeForData()
     }
 
+    // https://stackoverflow.com/questions/42301845/android-bottom-sheet-after-state-changed
+    // https://stackoverflow.com/questions/35937453/set-state-of-bottomsheetdialogfragment-to-expanded
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog: Dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
+        dialog.setOnShowListener { dialogInterface: DialogInterface? ->
+            // FIXME not working
+        }
+        return dialog
+    }
+
     // https://stackoverflow.com/questions/40616833/bottomsheetdialogfragment-listen-to-dismissed-by-user-event
     override fun onCancel(dialog: DialogInterface) {
         super.onCancel(dialog)
@@ -71,6 +86,7 @@ class PersonDetailBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun FragmentPersonDetailBottomSheetBinding.setupUI() {
+        setBottomSheetBehaviour()
         ivImageExpanded.layoutParams.height = deviceWidth()
         ivImage.load(person?.tempImageDrawable) {
             placeholder(R.drawable.ic_placeholder_big)
@@ -127,6 +143,40 @@ class PersonDetailBottomSheetFragment : BottomSheetDialogFragment() {
 
         etPhoneNumber.doTextFieldEmptyValidation()
         etPhoneNumber.setBoxStrokeOnFocusChange()
+    }
+
+    private fun setBottomSheetBehaviour() {
+        val bottomSheetDialog = dialog as BottomSheetDialog
+        val bottomSheet = bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout? ?: return
+        val behavior: BottomSheetBehavior<*> = BottomSheetBehavior.from(bottomSheet)
+//        bottomSheet.layoutParams.height = deviceHeight()
+//        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        var oldState = BottomSheetBehavior.STATE_HIDDEN
+        behavior.addBottomSheetCallback(object : BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                println("bottom sheet state: ${behavior.state}")
+                when (newState) {
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                        behavior.state = BottomSheetBehavior.STATE_HIDDEN
+                    }
+                    BottomSheetBehavior.STATE_DRAGGING -> Unit
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+                        oldState = BottomSheetBehavior.STATE_EXPANDED
+                    }
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> Unit
+                    BottomSheetBehavior.STATE_HIDDEN -> Unit
+                    BottomSheetBehavior.STATE_SETTLING -> {
+                        if (oldState == BottomSheetBehavior.STATE_EXPANDED) {
+                            behavior.state = BottomSheetBehavior.STATE_HIDDEN
+                        }
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                // React to dragging events
+            }
+        })
     }
 
     private fun FragmentPersonDetailBottomSheetBinding.observeForData() {
